@@ -55,37 +55,60 @@ void Card::printValue(bool alignRight) const {
   };
 }
 
+void Card::printColorCode() const {
+  switch (color) {
+    case CardColor::Eichel:
+      std::cout << "\033[37;40m";
+      break;
+    case CardColor::Blatt:
+      std::cout << "\033[32;40m";
+      break;
+    case CardColor::Herz:
+      std::cout << "\033[31;40m";
+      break;
+    case CardColor::Schellen:
+      std::cout << "\033[33;40m";
+      break;
+  }
+}
+
 void printCards(std::vector<Card> cards) {
   for (auto card : cards) {
+    card.printColorCode();
     std::cout << "┌──────┐";
   }
-  std::cout << std::endl;
+  std::cout << "\033[0m" << std::endl;
   for (auto card : cards) {
+    card.printColorCode();
     std::cout << "│ ";
     card.printValue(false);
     std::cout << " ";
     card.printColor();
     std::cout << " │";
   }
-  std::cout << std::endl;
+  std::cout << "\033[0m" << std::endl;
   for (auto card : cards) {
+    card.printColorCode();
     std::cout << "│      │";
   }
-  std::cout << std::endl;
+  std::cout << "\033[0m" << std::endl;
   for (auto card : cards) {
+    card.printColorCode();
     std::cout << "│      │";
   }
-  std::cout << std::endl;
+  std::cout << "\033[0m" << std::endl;
   for (auto card : cards) {
+    card.printColorCode();
     std::cout << "│ ";
     card.printColor();
     std::cout << " ";
     card.printValue(true);
     std::cout << " │";
   }
-  std::cout << std::endl;
+  std::cout << "\033[0m" << std::endl;
   for (auto card : cards) {
+    card.printColorCode();
     std::cout << "└──────┘";
   }
-  std::cout << std::endl;
+  std::cout << "\033[0m" << std::endl;
 }

@@ -23,6 +23,7 @@ struct Card {
   Card(CardColor c, CardValue v);
   void printColor() const;
   void printValue(bool alignRight) const;
+  void printColorCode() const;
   CardColor color;
   CardValue value;
 };
