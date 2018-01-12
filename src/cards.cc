@@ -72,6 +72,34 @@ void Card::printColorCode() const {
   }
 }
 
+CardSorter::CardSorter(CardColor trumpColor, bool highTen, bool trump) :
+  m_trumpColor{trumpColor}, m_highTen{highTen}, m_trump{trump} { }
+
+bool CardSorter::operator()(Card x, Card y) const {
+  if (m_trump && x.value == CardValue::Unter && y.value != CardValue::Unter) {
+    return false;
+  } else if (m_trump && y.value == CardValue::Unter && x.value != CardValue::Unter) {
+    return true;
+  } else if (x.color == y.color) {
+    /* Sort according to value: */
+    CardValue xval = x.value;
+    CardValue yval = y.value;
+    if (!m_highTen && x.value == CardValue::Zehn) {
+      xval = CardValue::LowTen;
+    };
+    if (!m_highTen && y.value == CardValue::Zehn) {
+      yval = CardValue::LowTen;
+    };
+    return (xval < yval);
+  } else {
+    /* Check if one card is trump: */
+    if (m_trump && x.color == m_trumpColor && x.value != CardValue::Unter) return false;
+    if (m_trump && y.color == m_trumpColor && y.value != CardValue::Unter) return true;
+    /* If not, sort according to color: */
+    return (x.color < y.color);
+  };
+}
+
 void printCards(std::vector<Card> cards) {
   for (auto card : cards) {
     card.printColorCode();
