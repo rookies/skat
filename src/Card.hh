@@ -1,6 +1,6 @@
 #pragma once
 
-enum CardColor {
+enum class CardColor {
   Bells = 0,  // Diamonds
   Hearts = 1,
   Leaves = 2, // Spades
@@ -8,7 +8,7 @@ enum CardColor {
   None = 4
 };
 
-enum CardValue {
+enum class CardValue {
   Seven = 0,
   Eight = 1,
   Nine = 2,
