@@ -1,31 +1,35 @@
 #pragma once
 #include <vector>
+#include <array>
 
 enum CardColor {
-  Schellen = 0, // Bells / Diamonds
-  Herz = 1,     // Hearts
-  Blatt = 2,    // Leaves / Spades
-  Eichel = 3,   // Acorns / Clubs
+  Bells = 0,  // Diamonds
+  Hearts = 1,
+  Leaves = 2, // Spades
+  Acorns = 3, // Clubs
   None = 4
 };
 
 enum CardValue {
-  Sieben = 0, // Seven
-  Acht = 1,   // Eight
-  Neun = 2,   // Nine
-  LowTen = 3, // Ten (low)
-  Unter = 4,  // Jack
-  Ober = 5,   // Queen
-  Koenig = 6, // King
-  Zehn = 7,   // Ten
-  Ass = 8     // Ace
+  Seven = 0,
+  Eight = 1,
+  Nine = 2,
+  LowTen = 3,
+  Jack = 4,
+  Queen = 5,
+  King = 6,
+  Ten = 7,
+  Ace = 8
 };
 
 struct Card {
+  /* Constructor: */
   Card(CardColor c, CardValue v);
+  /* Methods: */
   void printColor() const;
   void printValue(bool alignRight) const;
   void printColorCode() const;
+  /* Member variables: */
   CardColor color;
   CardValue value;
 };
@@ -40,4 +44,15 @@ private:
   bool m_trump;
 };
 
-void printCards(std::vector<Card> cards);
+class CardHelpers {
+public:
+  /* Public methods: */
+  static void print(std::vector<Card> cards);
+  static std::vector<Card> getDeck();
+  static std::array<std::vector<Card>,4> deal();
+  /* Public member variables: */
+  static const CardColor colors[4];
+  static const CardValue values[8];
+private:
+  CardHelpers();
+};
