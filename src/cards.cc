@@ -1,3 +1,5 @@
+#include <cstdlib>
+#include <ctime>
 #include <iostream>
 #include <utility>
 #include "cards.hh"
@@ -103,7 +105,7 @@ bool CardSorter::operator()(Card x, Card y) const {
 
 CardHelpers::CardHelpers() { }
 
-void CardHelpers::print(std::vector<Card> cards) {
+void CardHelpers::print(std::vector<Card> const &cards) {
   for (auto const &card : cards) {
     card.printColorCode();
     std::cout << "┌──────┐";
@@ -169,7 +171,7 @@ std::array<std::vector<Card>,4> CardHelpers::deal() {
   }
   result[3] = std::move(cards);
   /* And return the result: */
-  return result;
+  return std::move(result);
 }
 
 const CardColor CardHelpers::colors[] {

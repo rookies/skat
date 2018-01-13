@@ -47,7 +47,7 @@ private:
 class CardHelpers {
 public:
   /* Public methods: */
-  static void print(std::vector<Card> cards);
+  static void print(std::vector<Card> const &cards);
   static std::vector<Card> getDeck();
   static std::array<std::vector<Card>,4> deal();
   /* Public member variables: */
