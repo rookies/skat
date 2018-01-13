@@ -98,6 +98,32 @@ std::tuple<bool,unsigned int> CardHelpers::getSpitzenValue(std::vector<Card> con
   return std::tuple<bool,unsigned int>(!without, result);
 }
 
+unsigned int CardHelpers::getPoints(std::vector<Card> const &cards) {
+  unsigned int result = 0;
+  for (auto const &card: cards) {
+    switch (card.value) {
+      case CardValue::Jack:
+        result += 2;
+        break;
+      case CardValue::Queen:
+        result += 3;
+        break;
+      case CardValue::King:
+        result += 4;
+        break;
+      case CardValue::Ten:
+        result += 10;
+        break;
+      case CardValue::Ace:
+        result += 11;
+        break;
+      default:
+        result += 0;
+    }
+  }
+  return result;
+}
+
 const CardColor CardHelpers::colors[] {
   CardColor::Acorns, CardColor::Leaves, CardColor::Hearts, CardColor::Bells
 };

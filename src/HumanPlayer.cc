@@ -25,7 +25,7 @@ void HumanPlayer::init(std::vector<Card> const &cards, PlayerPosition position) 
     std::cout << "without ";
   };
   std::cout << std::get<1>(spitzen);
-  std::cout << "):" << std::endl;
+  std::cout << ", " << CardHelpers::getPoints(cards) << " points):" << std::endl;
   CardHelpers::print(cards);
 }
 
