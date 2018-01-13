@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
+#include <array>
 #include "Card.hh"
 
 enum class PlayerPosition {
@@ -24,8 +25,10 @@ public:
    * return value: whether the player wants to see the skat or not */
   virtual bool biddingWon(unsigned int finalBid, std::vector<Card> const &cards) = 0;
   /* Called when the player wants to see the skat.
-   * params: cards of the player, cards in the skat */
-  virtual void selectCards(std::vector<Card> const &cards, std::vector<Card> const &skat) = 0;
+   * params: cards of the player, cards in the skat
+   * return value: array of two card numbers (1..12) the player wants to put away */
+  virtual std::array<unsigned int,2> selectCards(std::vector<Card> const &cards,
+    std::vector<Card> const &skat) = 0;
   /* TODO: Select gamemode */
   /* TODO: biddingLost */
 };

@@ -113,7 +113,7 @@ int main() {
     std::cout << players[finalWinner].getName() << " plays, last bid was " << finalBid << "." << std::endl;
     if (players[finalWinner].biddingWon(finalBid, cards[finalWinner])) {
       /* normal game */
-      players[finalWinner].selectCards(cards[finalWinner], cards[3]);
+      auto putaway = players[finalWinner].selectCards(cards[finalWinner], cards[3]);
       /* TODO */
     } else {
       /* hand game */

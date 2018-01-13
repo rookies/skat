@@ -1,4 +1,5 @@
 #include <iostream>
+#include <limits>
 #include "CardHelpers.hh"
 #include "HumanPlayer.hh"
 
@@ -68,8 +69,25 @@ bool HumanPlayer::biddingWon(unsigned int finalBid, std::vector<Card> const &car
   return (response == 1);
 }
 
-void HumanPlayer::selectCards(std::vector<Card> const &cards, std::vector<Card> const &skat) {
+std::array<unsigned int,2> HumanPlayer::selectCards(std::vector<Card> const &cards,
+  std::vector<Card> const &skat)
+{
   std::cout << "Okay " << m_name << ", here is the skat:" << std::endl;
   CardHelpers::print(skat);
   std::cout << "   11      12" << std::endl;
+  unsigned int card1;
+  do {
+    std::cout << "What's the first card you want to put away? (1..12) " << std::flush;
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cin >> card1;
+  } while (std::cin.fail() || card1 < 1 || card1 > 12);
+  unsigned int card2;
+  do {
+    std::cout << "What's the second card you want to put away? (1..12, except " << card1 << ") " << std::flush;
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cin >> card2;
+  } while (std::cin.fail() || card2 == card1 || card2 < 1 || card2 > 12);
+  return std::array<unsigned int,2> {card1, card2};
 }
