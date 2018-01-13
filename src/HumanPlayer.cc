@@ -21,8 +21,19 @@ void HumanPlayer::init(std::vector<Card> const &cards, PlayerPosition position) 
   CardHelpers::print(cards);
 }
 
-bool HumanPlayer::bid(unsigned int lastBid) {
-  
+bool HumanPlayer::bid(unsigned int currentBid) {
+  int response = -1;
+  do {
+    std::cout << m_name << ", " << currentBid << "? (y/n) " << std::flush;
+    std::string answer;
+    std::cin >> answer;
+    if (answer == "y") {
+      response = 1;
+    } else if (answer == "n") {
+      response = 0;
+    };
+  } while (response == -1);
+  return (response == 1);
 }
 
 void HumanPlayer::biddingDone(PlayerPosition winner, unsigned int lastBid) {
