@@ -48,6 +48,8 @@ int main() {
     };
   } while (answer1 && answer2);
   /* Second round, Hinterhand tells and winner of first round (or Vorderhand, if none) listens: */
+  int finalWinner = -1;
+  unsigned int finalBid = 0;
   if (player == -1) {
     answer1 = players[2].bid(bids[0]);
     if (answer1) {
@@ -60,18 +62,25 @@ int main() {
           if (answer2) {
             player = 2;
           } else {
-            std::cout << "player 0 wins, bid: " << bids[lastBid] << std::endl;
+            /* Vorderhand wins */
+            finalWinner = 0;
+            finalBid = bids[lastBid];
           };
         } else {
-          std::cout << "player 2 wins, bid: " << bids[lastBid+1] << std::endl;
+          /* Hinterhand wins */
+          finalWinner = 2;
+          finalBid = bids[lastBid+1];
         };
       } while (answer1 && answer2);
     } else {
       answer2 = players[0].bid(bids[0]);
       if (answer2) {
-        std::cout << "player 0 wins, bid: " << bids[0] << std::endl;
+        /* Vorderhand wins */
+        finalWinner = 0;
+        finalBid = bids[0];
       } else {
-        std::cout << "Ramsch" << std::endl;
+        /* Ramsch */
+        finalWinner = -1;
       };
     };
   } else {
@@ -85,11 +94,30 @@ int main() {
         if (answer2) {
           player = firstwinner;
         } else {
-          std::cout << "player 2 wins, bid: " << bids[lastBid-1] << std::endl;
+          /* Hinterhand wins */
+          finalWinner = 2;
+          finalBid = bids[lastBid-1];
         };
       } else {
-        std::cout << "player " << firstwinner << " wins, bid: " << bids[lastBid] << std::endl;
+        /* Winner of first round wins */
+        finalWinner = firstwinner;
+        finalBid = bids[lastBid];
       };
     } while (answer1 && answer2);
+  };
+  /* Bidding done, print result: */
+  if (finalWinner == -1) {
+    std::cout << "Nobody wants to play, time for Ramsch." << std::endl;
+    /* TODO */
+  } else {
+    std::cout << players[finalWinner].getName() << " plays, last bid was " << finalBid << "." << std::endl;
+    if (players[finalWinner].biddingWon(finalBid, cards[finalWinner])) {
+      /* normal game */
+      players[finalWinner].selectCards(cards[finalWinner], cards[3]);
+      /* TODO */
+    } else {
+      /* hand game */
+      /* TODO */
+    };
   };
 }
