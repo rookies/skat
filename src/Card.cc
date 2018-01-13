@@ -17,6 +17,8 @@ void Card::printColor() const {
     case CardColor::Bells:
       std::cout << "♦";
       break;
+    default:
+      std::cout << "?";
   }
 }
 
@@ -49,6 +51,8 @@ void Card::printValue(bool alignRight) const {
     case CardValue::Ace:
       std::cout << "A";
       break;
+    default:
+      std::cout << "?";
   }
   if (!alignRight && value != CardValue::Ten) {
     std::cout << " ";
@@ -69,5 +73,7 @@ void Card::printColorCode() const {
     case CardColor::Bells:
       std::cout << "\033[33;40m";
       break;
+    default:
+      std::cout << "";
   }
 }
