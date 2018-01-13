@@ -17,7 +17,15 @@ void HumanPlayer::init(std::vector<Card> const &cards, PlayerPosition position) 
       std::cout << "Hinterhand";
       break;
   }
-  std::cout << " and here are your cards:" << std::endl;
+  std::cout << " and here are your cards (";
+  auto spitzen = CardHelpers::getSpitzenValue(cards);
+  if (std::get<0>(spitzen)) {
+    std::cout << "with ";
+  } else {
+    std::cout << "without ";
+  };
+  std::cout << std::get<1>(spitzen);
+  std::cout << "):" << std::endl;
   CardHelpers::print(cards);
 }
 

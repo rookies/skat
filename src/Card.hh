@@ -31,3 +31,5 @@ struct Card {
   CardColor color;
   CardValue value;
 };
+
+bool operator==(const Card &a, const Card &b);

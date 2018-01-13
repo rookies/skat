@@ -2,6 +2,7 @@
 #include <ctime>
 #include <iostream>
 #include <utility>
+#include <algorithm>
 #include "CardHelpers.hh"
 
 CardHelpers::CardHelpers() { }
@@ -73,6 +74,28 @@ std::array<std::vector<Card>,4> CardHelpers::deal() {
   result[3] = std::move(cards);
   /* And return the result: */
   return std::move(result);
+}
+
+std::tuple<bool,unsigned int> CardHelpers::getSpitzenValue(std::vector<Card> const &cards) {
+  bool without;
+  /* Check if we have the acorns jack: */
+  if (std::find(cards.begin(), cards.end(), Card(CardColor::Acorns, CardValue::Jack)) == cards.end()) {
+    /* without */
+    without = true;
+  } else {
+    /* with */
+    without = false;
+  };
+  /* Check the other ones: */
+  unsigned int result = 1;
+  for (auto color : { CardColor::Leaves, CardColor::Hearts, CardColor::Bells }) {
+    if ((std::find(cards.begin(), cards.end(), Card(color, CardValue::Jack)) == cards.end()) == without) {
+      ++result;
+    } else {
+      break;
+    };
+  }
+  return std::tuple<bool,unsigned int>(!without, result);
 }
 
 const CardColor CardHelpers::colors[] {

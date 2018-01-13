@@ -77,3 +77,7 @@ void Card::printColorCode() const {
       std::cout << "";
   }
 }
+
+bool operator==(const Card &a, const Card &b) {
+  return (a.color == b.color) && (a.value == b.value);
+}
