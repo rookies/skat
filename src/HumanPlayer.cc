@@ -43,8 +43,7 @@ bool HumanPlayer::bid(unsigned int currentBid) {
 bool HumanPlayer::biddingWon(unsigned int finalBid, std::vector<Card> const &cards) {
   std::cout << m_name << ", here are your cards again:" << std::endl;
   CardHelpers::print(cards);
-  std::cout << "   01      02      03      04      05      06";
-  std::cout << "      07      08      09      10" << std::endl;
+  UiHelpers::cardNumbers(1, 10, 2);
   std::cout << "Your last bid was " << finalBid << "." << std::endl;
   return UiHelpers::yesOrNoPrompt([&]() {
     std::cout << "Do you want to see the skat? (y/n) " << std::flush;
@@ -56,7 +55,7 @@ std::array<unsigned int,2> HumanPlayer::selectCards(std::vector<Card> const &car
 {
   std::cout << "Okay " << m_name << ", here is the skat:" << std::endl;
   CardHelpers::print(skat);
-  std::cout << "   11      12" << std::endl;
+  UiHelpers::cardNumbers(11, 12, 2);
   unsigned int card1 = UiHelpers::numberPrompt([&]() {
     std::cout << "What's the first card you want to put away? (1..12) " << std::flush;
   }, [&](unsigned int n) {

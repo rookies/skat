@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <limits>
+#include <iomanip>
 #include "UiHelpers.hh"
 
 bool UiHelpers::yesOrNoPrompt(std::function<void()> printPrompt) {
@@ -29,4 +30,15 @@ unsigned int UiHelpers::numberPrompt(std::function<void()> printPrompt,
     std::cin >> response;
   } while (std::cin.fail() || !validate(response));
   return response;
+}
+
+void UiHelpers::cardNumbers(unsigned int min, unsigned int max, unsigned int digits) {
+  std::cout << "   ";
+  for (unsigned int i=min; i <= max; ++i) {
+    std::cout << std::setw(digits) << std::setfill('0') << i;
+    if (i != max) {
+      std::cout << "      ";
+    };
+  }
+  std::cout << std::endl;
 }
