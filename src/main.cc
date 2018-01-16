@@ -7,6 +7,7 @@
 #include "CardSorter.hh"
 #include "HumanPlayer.hh"
 #include "Game.hh"
+#include "GameOptions.hh"
 
 int main() {
   std::cout << "Welcome to skat." << std::endl;
@@ -40,16 +41,30 @@ int main() {
   } else {
     std::cout << players[finalWinner]->getName() << " plays, last bid was " << finalBid << "." << std::endl;
     /* Ask the winner if (s)he wants to see the skat: */
+    bool hand;
     if (players[finalWinner]->biddingWon(finalBid, cards[finalWinner])) {
       /* normal game */
-      auto putaway = players[finalWinner]->selectCards(cards[finalWinner], cards[3]);
+      hand = false;
+      std::array<unsigned int,2> putaway = players[finalWinner]->selectCards(cards[finalWinner], cards[3]);
       /* TODO: Check and remember putaway. */
     } else {
       /* hand game */
-      /* TODO: Set flag for hand game and inform players. */
+      hand = true;
     };
     /* Ask the winner what (s)he wants to play: */
-    players[finalWinner]->selectGameOptions();
-    /* TODO: Check game options, remember them and inform players. */
+    GameOptions options = players[finalWinner]->selectGameOptions();
+    /* ... and validate the answer: */
+    if (options.type != GameType::Suit) {
+      options.trump = CardColor::None;
+    };
+    options.hand = hand;
+    if (options.type == GameType::Null) {
+      options.schneider = false;
+      options.schwarz = false;
+    };
+    if (!options.schneider) {
+      options.schwarz = false;
+    };
+    /* TODO: Inform players. */
   };
 }
