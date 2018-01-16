@@ -3,6 +3,7 @@
 #include <string>
 #include <array>
 #include "Card.hh"
+#include "GameOptions.hh"
 
 enum class PlayerPosition {
   Vorderhand,
@@ -29,6 +30,8 @@ public:
    * return value: array of two card numbers (1..12) the player wants to put away */
   virtual std::array<unsigned int,2> selectCards(std::vector<Card> const &cards,
     std::vector<Card> const &skat) = 0;
-  /* TODO: Select gamemode */
+  /* Called when the player has to select the game options.
+   * return value: game options the player choose */
+  virtual GameOptions selectGameOptions() = 0;
   /* TODO: biddingLost */
 };

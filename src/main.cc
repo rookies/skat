@@ -35,16 +35,20 @@ int main() {
   /* Bidding done, print result: */
   if (finalWinner == -1) {
     std::cout << "Nobody wants to play, time for Ramsch." << std::endl;
-    /* TODO */
+    std::cout << "Sorry, but that's not implemented, yet." << std::endl;
+    /* TODO: Implement Ramsch. */
   } else {
     std::cout << players[finalWinner]->getName() << " plays, last bid was " << finalBid << "." << std::endl;
+    /* Ask the winner if (s)he wants to see the skat: */
     if (players[finalWinner]->biddingWon(finalBid, cards[finalWinner])) {
       /* normal game */
       auto putaway = players[finalWinner]->selectCards(cards[finalWinner], cards[3]);
-      /* TODO */
+      /* TODO: Check and remember putaway. */
     } else {
       /* hand game */
-      /* TODO */
+      /* TODO: Set flag for hand game and inform players. */
     };
+    /* Ask the winner what (s)he wants to play: */
+    players[finalWinner]->selectGameOptions();
   };
 }

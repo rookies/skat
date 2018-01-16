@@ -10,6 +10,7 @@ public:
   bool biddingWon(unsigned int finalBid, std::vector<Card> const &cards) override;
   std::array<unsigned int,2> selectCards(std::vector<Card> const &cards,
     std::vector<Card> const &skat) override;
+  GameOptions selectGameOptions() override;
 private:
   std::string m_name;
 };
