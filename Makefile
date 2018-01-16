@@ -5,7 +5,8 @@ SRC = src/main.cc \
       src/CardSorter.cc \
       src/HumanPlayer.cc \
       src/Game.cc \
-      src/GameOptions.cc
+      src/GameOptions.cc \
+      src/UiHelpers.cc
 CXXFLAGS = -Wall -Wextra
 OBJ = $(SRC:.cc=.o)
 

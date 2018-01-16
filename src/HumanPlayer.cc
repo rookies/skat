@@ -1,6 +1,6 @@
 #include <iostream>
-#include <limits>
 #include "CardHelpers.hh"
+#include "UiHelpers.hh"
 #include "HumanPlayer.hh"
 
 HumanPlayer::HumanPlayer(std::string name) : m_name{name} { }
@@ -35,18 +35,9 @@ void HumanPlayer::init(std::vector<Card> const &cards, PlayerPosition position) 
 }
 
 bool HumanPlayer::bid(unsigned int currentBid) {
-  int response = -1;
-  do {
+  return UiHelpers::yesOrNoPrompt([&]() {
     std::cout << m_name << ", " << currentBid << "? (y/n) " << std::flush;
-    std::string answer;
-    std::cin >> answer;
-    if (answer == "y") {
-      response = 1;
-    } else if (answer == "n") {
-      response = 0;
-    };
-  } while (response == -1);
-  return (response == 1);
+  });
 }
 
 bool HumanPlayer::biddingWon(unsigned int finalBid, std::vector<Card> const &cards) {
@@ -55,18 +46,9 @@ bool HumanPlayer::biddingWon(unsigned int finalBid, std::vector<Card> const &car
   std::cout << "   01      02      03      04      05      06";
   std::cout << "      07      08      09      10" << std::endl;
   std::cout << "Your last bid was " << finalBid << "." << std::endl;
-  int response = -1;
-  do {
+  return UiHelpers::yesOrNoPrompt([&]() {
     std::cout << "Do you want to see the skat? (y/n) " << std::flush;
-    std::string answer;
-    std::cin >> answer;
-    if (answer == "y") {
-      response = 1;
-    } else if (answer == "n") {
-      response = 0;
-    };
-  } while (response == -1);
-  return (response == 1);
+  });
 }
 
 std::array<unsigned int,2> HumanPlayer::selectCards(std::vector<Card> const &cards,
@@ -75,20 +57,16 @@ std::array<unsigned int,2> HumanPlayer::selectCards(std::vector<Card> const &car
   std::cout << "Okay " << m_name << ", here is the skat:" << std::endl;
   CardHelpers::print(skat);
   std::cout << "   11      12" << std::endl;
-  unsigned int card1;
-  do {
+  unsigned int card1 = UiHelpers::numberPrompt([&]() {
     std::cout << "What's the first card you want to put away? (1..12) " << std::flush;
-    std::cin.clear();
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    std::cin >> card1;
-  } while (std::cin.fail() || card1 < 1 || card1 > 12);
-  unsigned int card2;
-  do {
+  }, [&](unsigned int n) {
+    return (n >= 1 && n <= 12);
+  });
+  unsigned int card2 = UiHelpers::numberPrompt([&]() {
     std::cout << "What's the second card you want to put away? (1..12, except " << card1 << ") " << std::flush;
-    std::cin.clear();
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    std::cin >> card2;
-  } while (std::cin.fail() || card2 == card1 || card2 < 1 || card2 > 12);
+  }, [&](unsigned int n) {
+    return (n >= 1 && n <= 12 && n != card1);
+  });
   return std::array<unsigned int,2> {card1, card2};
 }
 
@@ -106,49 +84,25 @@ GameOptions HumanPlayer::selectGameOptions() {
   std::cout << "\033[36m 5 - U Grand" << std::endl;
   std::cout << " 6 - 0 Null\033[0m" << std::endl;
   /* Get the answer: */
-  unsigned int choice;
-  do {
+  unsigned int choice = UiHelpers::numberPrompt([&]() {
     std::cout << "-> " << std::flush;
-    std::cin.clear();
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    std::cin >> choice;
-  } while (std::cin.fail() || choice < 1 || choice > 6);
+  }, [&](unsigned int n) {
+    return (n >= 1 && n <= 6);
+  });
   /* Ask for ouvert: */
-  int response = -1;
-  do {
+  UiHelpers::yesOrNoPrompt([&]() {
     std::cout << "Ouvert? (y/n) " << std::flush;
-    std::string answer;
-    std::cin >> answer;
-    if (answer == "y") {
-      response = 1;
-    } else if (answer == "n") {
-      response = 0;
-    };
-  } while (response == -1);
+  });
   if (choice != 6) {
     /* Ask for schneider: */
-    response = -1;
-    do {
+    UiHelpers::yesOrNoPrompt([&]() {
       std::cout << "Schneider? (y/n) " << std::flush;
-      std::string answer;
-      std::cin >> answer;
-      if (answer == "y") {
-        response = 1;
-      } else if (answer == "n") {
-        response = 0;
-      };
-    } while (response == -1);
+    });
+    /* TODO: Only if schneider */
     /* Ask for schwarz: */
-    response = -1;
-    do {
+    UiHelpers::yesOrNoPrompt([&]() {
       std::cout << "Schwarz? (y/n) " << std::flush;
-      std::string answer;
-      std::cin >> answer;
-      if (answer == "y") {
-        response = 1;
-      } else if (answer == "n") {
-        response = 0;
-      };
-    } while (response == -1);
+    });
   };
+  /* TODO: Return GameOptions */
 }
