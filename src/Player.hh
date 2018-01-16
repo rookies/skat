@@ -31,7 +31,10 @@ public:
   virtual std::array<unsigned int,2> selectCards(std::vector<Card> const &cards,
     std::vector<Card> const &skat) = 0;
   /* Called when the player has to select the game options.
-   * return value: game options the player choose */
+   * return value: game options the player choose (hand is ignored) */
   virtual GameOptions selectGameOptions() = 0;
-  /* TODO: biddingLost */
+  /* Called after game options have been selected if the player lost the bidding.
+   * param: the game options */
+  /* TODO: Pass position & name of the winner? */
+  virtual void biddingLost(GameOptions options) = 0;
 };

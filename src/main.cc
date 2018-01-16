@@ -65,6 +65,11 @@ int main() {
     if (!options.schneider) {
       options.schwarz = false;
     };
-    /* TODO: Inform players. */
+    /* Inform the other players: */
+    for (int i=0; i < 3; ++i) {
+      if (i != finalWinner) {
+        players[i]->biddingLost(options);
+      };
+    }
   };
 }

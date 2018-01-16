@@ -11,6 +11,7 @@ public:
   std::array<unsigned int,2> selectCards(std::vector<Card> const &cards,
     std::vector<Card> const &skat) override;
   GameOptions selectGameOptions() override;
+  void biddingLost(GameOptions options) override;
 private:
   std::string m_name;
 };

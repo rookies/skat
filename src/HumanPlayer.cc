@@ -121,3 +121,7 @@ GameOptions HumanPlayer::selectGameOptions() {
       return GameOptions(false, ouvert);
   }
 }
+
+void HumanPlayer::biddingLost(GameOptions options) {
+  /* TODO */
+}
