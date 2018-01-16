@@ -84,25 +84,40 @@ GameOptions HumanPlayer::selectGameOptions() {
   std::cout << "\033[36m 5 - U Grand" << std::endl;
   std::cout << " 6 - 0 Null\033[0m" << std::endl;
   /* Get the answer: */
-  unsigned int choice = UiHelpers::numberPrompt([&]() {
+  unsigned int type = UiHelpers::numberPrompt([&]() {
     std::cout << "-> " << std::flush;
   }, [&](unsigned int n) {
     return (n >= 1 && n <= 6);
   });
   /* Ask for ouvert: */
-  UiHelpers::yesOrNoPrompt([&]() {
+  bool ouvert = UiHelpers::yesOrNoPrompt([&]() {
     std::cout << "Ouvert? (y/n) " << std::flush;
   });
-  if (choice != 6) {
-    /* Ask for schneider: */
-    UiHelpers::yesOrNoPrompt([&]() {
+  /* Ask for schneider & schwarz: */
+  bool schneider, schwarz = false;
+  if (type != 6) {
+    schneider = UiHelpers::yesOrNoPrompt([&]() {
       std::cout << "Schneider? (y/n) " << std::flush;
     });
-    /* TODO: Only if schneider */
-    /* Ask for schwarz: */
-    UiHelpers::yesOrNoPrompt([&]() {
-      std::cout << "Schwarz? (y/n) " << std::flush;
-    });
+    if (schneider) {
+      schwarz = UiHelpers::yesOrNoPrompt([&]() {
+        std::cout << "Schwarz? (y/n) " << std::flush;
+      });
+    };
   };
-  /* TODO: Return GameOptions */
+  /* Return GameOptions: */
+  switch (type) {
+    case 1:
+      return GameOptions(CardColor::Bells, false, ouvert, schneider, schwarz);
+    case 2:
+      return GameOptions(CardColor::Hearts, false, ouvert, schneider, schwarz);
+    case 3:
+      return GameOptions(CardColor::Leaves, false, ouvert, schneider, schwarz);
+    case 4:
+      return GameOptions(CardColor::Acorns, false, ouvert, schneider, schwarz);
+    case 5:
+      return GameOptions(false, ouvert, schneider, schwarz);
+    default:
+      return GameOptions(false, ouvert);
+  }
 }

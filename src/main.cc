@@ -50,5 +50,6 @@ int main() {
     };
     /* Ask the winner what (s)he wants to play: */
     players[finalWinner]->selectGameOptions();
+    /* TODO: Check game options, remember them and inform players. */
   };
 }
