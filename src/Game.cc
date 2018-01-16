@@ -15,7 +15,7 @@ std::tuple<int,int> Game::bidding(std::array<std::shared_ptr<Player>,3> const &p
         player = 0;
       };
     };
-  } while (answer1 && answer2);
+  } while (answer1 && answer2 && lastBid < 62);
   /* Second round, Hinterhand tells and winner of first round (or Vorderhand, if none) listens: */
   int finalWinner = -1;
   unsigned int finalBid = 0;
@@ -40,7 +40,7 @@ std::tuple<int,int> Game::bidding(std::array<std::shared_ptr<Player>,3> const &p
           finalWinner = 2;
           finalBid = bids[lastBid+1];
         };
-      } while (answer1 && answer2);
+      } while (answer1 && answer2 && lastBid < 62);
     } else {
       answer2 = players[0]->bid(bids[0]);
       if (answer2) {
@@ -72,7 +72,7 @@ std::tuple<int,int> Game::bidding(std::array<std::shared_ptr<Player>,3> const &p
         finalWinner = firstwinner;
         finalBid = bids[lastBid];
       };
-    } while (answer1 && answer2);
+    } while (answer1 && answer2 && lastBid < 62);
   };
   return std::make_tuple(finalWinner, finalBid);
 }
