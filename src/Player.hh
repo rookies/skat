@@ -34,7 +34,7 @@ public:
    * return value: game options the player choose (hand is ignored) */
   virtual GameOptions selectGameOptions() = 0;
   /* Called after game options have been selected if the player lost the bidding.
-   * param: the game options */
-  /* TODO: Pass position & name of the winner? */
-  virtual void biddingLost(GameOptions options) = 0;
+   * params: the game options, name of the winner */
+  /* TODO: Pass position of the winner */
+  virtual void biddingLost(GameOptions const &options, std::string const &name) = 0;
 };

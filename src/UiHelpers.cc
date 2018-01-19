@@ -42,3 +42,26 @@ void UiHelpers::cardNumbers(unsigned int min, unsigned int max, unsigned int dig
   }
   std::cout << std::endl;
 }
+
+void UiHelpers::cardColorName(CardColor color) {
+  switch (color) {
+    case CardColor::Acorns:
+      Card(CardColor::Acorns, CardValue::Ace).printColorCode();
+      std::cout << "♣ Acorns\033[0m";
+      break;
+    case CardColor::Leaves:
+      Card(CardColor::Leaves, CardValue::Ace).printColorCode();
+      std::cout << "♠ Leaves\033[0m";
+      break;
+    case CardColor::Hearts:
+      Card(CardColor::Hearts, CardValue::Ace).printColorCode();
+      std::cout << "♥ Hearts\033[0m";
+      break;
+    case CardColor::Bells:
+      Card(CardColor::Bells, CardValue::Ace).printColorCode();
+      std::cout << "♦ Bells\033[0m";
+      break;
+    default:
+      std::cout << "";
+  }
+}

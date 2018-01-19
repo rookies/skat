@@ -121,6 +121,33 @@ GameOptions HumanPlayer::selectGameOptions() {
   }
 }
 
-void HumanPlayer::biddingLost(GameOptions options) {
-  /* TODO */
+void HumanPlayer::biddingLost(GameOptions const &options, std::string const &name) {
+  /* Put all options into a string: */
+  std::string str;
+  if (options.hand) {
+    str += " Hand";
+  };
+  if (options.ouvert) {
+    str += " Ouvert";
+  };
+  if (options.schneider) {
+    str += " Schneider";
+  };
+  if (options.schwarz) {
+    str += " Schwarz";
+  };
+  /* Print message depending on game type: */
+  std::cout << "Hey " << m_name << ", " << name << " wants to play ";
+  switch (options.type) {
+    case GameType::Grand:
+      std::cout << "Grand" << str << "." << std::endl;
+      break;
+    case GameType::Null:
+      std::cout << "Null" << str << "." << std::endl;
+      break;
+    case GameType::Suit:
+      UiHelpers::cardColorName(options.trump);
+      std::cout << str << "." << std::endl;
+      break;
+  }
 }
